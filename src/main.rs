@@ -98,11 +98,12 @@ fn handle_visit(
 
 #[launch]
 fn rocket() -> _ {
-    let reader = maxminddb::Reader::open_readfile(
-        "/home/mononofu/tmp/GeoLite2-City_20210706/GeoLite2-City.mmdb",
-    )
-    .unwrap();
-    rocket::build()
+    let rocket = rocket::build();
+    let figment = rocket.figment();
+
+    let maxminddb_path: String = figment.extract_inner("maxminddb").expect("config");
+    let reader = maxminddb::Reader::open_readfile(maxminddb_path).unwrap();
+    rocket
         .manage(reader)
         .mount("/", routes![index, visit_pixel, visit_beacon, exit_beacon])
 }
