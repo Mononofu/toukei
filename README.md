@@ -1,0 +1,1 @@
+Simple privacy preserving visit counter for my [personal blog](https://www.furidamu.org/).

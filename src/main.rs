@@ -8,7 +8,7 @@ use rocket::response::{self, Responder, Response};
 
 #[get("/")]
 fn index() -> &'static str {
-    "Hello, world!"
+    "Please see https://github.com/Mononofu/toukei"
 }
 
 const EMPTY_PNG: &[u8] = include_bytes!("1x1.png");
