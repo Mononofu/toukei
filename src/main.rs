@@ -103,6 +103,12 @@ fn rocket() -> _ {
 
     let maxminddb_path: String = figment.extract_inner("maxminddb").expect("config");
     let reader = maxminddb::Reader::open_readfile(maxminddb_path).unwrap();
+
+    let rocket = match figment.extract_inner::<String>("static_dir") {
+        Ok(d) => rocket.mount("/", rocket::fs::FileServer::from(d)),
+        _ => rocket,
+    };
+
     rocket
         .manage(reader)
         .mount("/", routes![index, visit_pixel, visit_beacon, exit_beacon])
